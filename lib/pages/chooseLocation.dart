@@ -12,19 +12,6 @@ class ChooseLocation extends StatefulWidget {
 class _ChooseLocationState extends State<ChooseLocation> {
   int counter = 0;
 
-  void getDate() {
-    Future.delayed(Duration(seconds: 3), () {
-      print("delay function");
-    });
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    getDate();
-    // print('initState function run');
-  }
-
   @override
   Widget build(BuildContext context) {
     print('Build function run');

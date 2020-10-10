@@ -8,7 +8,7 @@ import 'package:test02/pages/chooseLocation.dart';
 
 void main() {
   runApp(MaterialApp(
-    initialRoute: '/home', // default route
+    initialRoute: '/', // default route
     routes: {
       '/': (context) => Loading(),
       '/home': (context) => Home(),
