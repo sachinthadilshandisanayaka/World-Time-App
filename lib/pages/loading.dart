@@ -1,7 +1,6 @@
 // import 'dart:html';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart';
-import 'dart:convert';
+import 'package:test02/services/worldTime.dart';
 
 class Loading extends StatefulWidget {
   @override
@@ -9,33 +8,30 @@ class Loading extends StatefulWidget {
 }
 
 class _LoadingState extends State<Loading> {
-  void getTime() async {
-    Response response =
-        await get('http://worldtimeapi.org/api/timezone/Asia/Colombo');
-    Map data = jsonDecode(response.body);
-
-    String datetime = data['datetime'];
-    String offset = data['utc_offset'].substring(1, 3);
-    // print(datetime);
-    // print(offset);
-
-    DateTime now = DateTime.parse(datetime);
-    now = now.add(Duration(hours: int.parse(offset)));
-    print(now);
+  String time = 'Loading...';
+  void setupWorldTime() async {
+    WorldTime worldTime = new WorldTime(
+        location: 'Colombo', flag: 'Srilanka.png', url: 'Asia/Colombo');
+    await worldTime.getTime();
+    setState(() {
+      time = worldTime.time;
+    });
   }
 
   @override
   void initState() {
     // it run when the main widget start to run
     super.initState();
-    getTime();
-    // print('initState function run');
+    setupWorldTime();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Text('Loading screen'),
+      body: Padding(
+        padding: const EdgeInsets.all(50.0),
+        child: Text(time),
+      ),
     );
   }
 }
