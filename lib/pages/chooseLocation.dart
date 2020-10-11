@@ -1,8 +1,7 @@
-// import 'dart:html';
-// import 'dart:html';
+import 'dart:html';
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
+import 'package:test02/services/worldTime.dart';
 
 class ChooseLocation extends StatefulWidget {
   @override
@@ -10,7 +9,28 @@ class ChooseLocation extends StatefulWidget {
 }
 
 class _ChooseLocationState extends State<ChooseLocation> {
-  int counter = 0;
+  List<WorldTime> locations = [
+    WorldTime(
+        location: 'New_York', flag: 'america.png', url: 'America/New_York'),
+    WorldTime(location: 'Colombo', flag: 'sl.png', url: 'Asia/Colombo'),
+    WorldTime(location: 'Tokyo', flag: 'china.png', url: 'Asia/Tokyo'),
+    WorldTime(location: 'Canary', flag: 'sl.png', url: 'Atlantic/Canary'),
+    WorldTime(location: 'Currie', flag: 'sl.png', url: 'Australia/Currie'),
+    WorldTime(location: 'Paris', flag: 'sl.png', url: 'Europe/Paris'),
+    WorldTime(location: 'Rome', flag: 'sl.png', url: 'Europe/Rome'),
+    WorldTime(location: 'Fiji', flag: 'sl.png', url: 'Pacific/Fiji'),
+  ];
+
+  void updateTime(index) async {
+    WorldTime instance = locations[index];
+    await instance.getTime();
+    Navigator.pop(context, {
+      'location': instance.location,
+      'flag': instance.flag,
+      'time': instance.time,
+      'isDayTime': instance.isDayTime,
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,27 +43,21 @@ class _ChooseLocationState extends State<ChooseLocation> {
         centerTitle: true,
         elevation: 0.0,
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(10.0),
-        child: Column(
-          children: <Widget>[
-            Text(
-              'Choose location screen',
-              style: TextStyle(
-                color: Colors.white,
-                letterSpacing: 2.0,
+      body: ListView.builder(
+        itemCount: locations.length,
+        itemBuilder: (BuildContext context, int index) {
+          return Card(
+            child: ListTile(
+              onTap: () {
+                updateTime(index);
+              },
+              title: Text(locations[index].location),
+              leading: CircleAvatar(
+                backgroundImage: AssetImage('assets/${locations[index].flag}'),
               ),
             ),
-            RaisedButton(
-              onPressed: () {
-                setState(() {
-                  counter += 1;
-                });
-              },
-              child: Text('Counter is $counter'),
-            ),
-          ],
-        ),
+          );
+        },
       ),
     );
   }

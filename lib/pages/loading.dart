@@ -15,7 +15,8 @@ class _LoadingState extends State<Loading> {
     Navigator.pushReplacementNamed(context, '/home', arguments: {
       'location': worldTime.location,
       'flag': worldTime.flag,
-      'time': worldTime.time
+      'time': worldTime.time,
+      'isDayTime': worldTime.isDayTime,
     });
   }
 
@@ -33,7 +34,7 @@ class _LoadingState extends State<Loading> {
       body: Center(
         child: SpinKitFadingCircle(
           color: Colors.white,
-          size: 80.0,
+          size: 60.0,
         ),
       ),
     );
