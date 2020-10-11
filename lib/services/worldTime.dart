@@ -24,7 +24,7 @@ class WorldTime {
       now = now.add(Duration(hours: int.parse(offset)));
       time = now.toString();
     } catch (e) {
-      print(e);
+      print('Error is occure => $e');
       time = 'Can not get the date';
     }
   }

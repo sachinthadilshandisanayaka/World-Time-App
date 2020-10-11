@@ -1,4 +1,6 @@
 // import 'dart:html';
+import 'dart:html';
+
 import 'package:flutter/material.dart';
 import 'package:test02/services/worldTime.dart';
 
@@ -8,13 +10,14 @@ class Loading extends StatefulWidget {
 }
 
 class _LoadingState extends State<Loading> {
-  String time = 'Loading...';
   void setupWorldTime() async {
     WorldTime worldTime = new WorldTime(
         location: 'Colombo', flag: 'Srilanka.png', url: 'Asia/Colombo');
     await worldTime.getTime();
-    setState(() {
-      time = worldTime.time;
+    Navigator.pushReplacementNamed(context, '/home', arguments: {
+      'location': worldTime.location,
+      'flag': worldTime.flag,
+      'time': worldTime.time
     });
   }
 
@@ -30,7 +33,7 @@ class _LoadingState extends State<Loading> {
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(50.0),
-        child: Text(time),
+        child: Text('Loading...'),
       ),
     );
   }
